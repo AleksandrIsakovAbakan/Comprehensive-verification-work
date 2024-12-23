@@ -1,5 +1,7 @@
+import java.lang.RuntimeException
+
 fun main() {
-    var n = 3
+    var n = 5
     println("Найти сумму 1+1/2+1/3+…+1/n при n $n  = ${findAmount(n)}")
 
     val a = 2
@@ -7,11 +9,11 @@ fun main() {
     println("Найти сумму квадратов всех целых чисел от $a до $b включительно =" +
             " ${sumOfSquaresOfAllIntegersFromAToB(a, b)}")
 
-    val A = 3
-    val B = 5
+    val A = 5
+    val B = 13
     printAllIntegersFromAToBInclusive(A, B)
 
-    n = 6
+    n = 29
     checksIfNumberIsPrime(n)
 
     mystery()
@@ -22,7 +24,7 @@ fun main() {
 Найти сумму 1+1/2+1/3+…+1/n (вещественное число).
 */
 fun findAmount(n:Int): Double {
-    if (n <= 0) return 0.0
+    if (n <= 0) throw RuntimeException("n <= 0")
     if (n == 1) return 1.0
     var temp = 1.0
     for (a in 2..n) temp += (1.0 / a)
@@ -46,10 +48,12 @@ fun sumOfSquaresOfAllIntegersFromAToB(a: Int, b: Int): Int {
 (допустим a = 3, b = 5 à 3,4,4,5,5,5)
 */
 fun printAllIntegersFromAToBInclusive(A: Int, B: Int){
+    var result = "Вывести все целые числа от $A до $B включительно: "
     if (A < B) {
-        var result = "Вывести все целые числа от $A до $B включительно "
         for ((count, c) in (A..B).withIndex()) for (d in 0..count) result = "$result$c,"
         println(result.substring(0,result.length - 1))
+    } else if (A == B) {
+        println(result + A)
     } else {
         println("Не выполняется условие A<B")
     }
@@ -61,7 +65,7 @@ fun printAllIntegersFromAToBInclusive(A: Int, B: Int){
 */
 fun checksIfNumberIsPrime(n: Int) {
     var test = false
-    if (n < 2) test = true else for (a in 2..<n) if (n % a == 0) test = true
+    if (n < 2) test = true else for (a in 2 until n) if (n % a == 0) test = true
     if (test) println("Число $n не является простым") else println("Число $n является простым")
 }
 
